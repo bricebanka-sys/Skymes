@@ -17,6 +17,9 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 // Enregistrement du repository avec une durée de vie "Scoped"
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
+// Enregistrement du référentiel générique en mode Scoped
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
 var app = builder.Build();
 
 
