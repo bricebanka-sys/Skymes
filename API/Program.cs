@@ -1,3 +1,4 @@
+using API.Middleware;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Ajout des services pour les contrôleurs
 builder.Services.AddControllers();
+
 
 // Enregistrement du StoreContext avec SQL Server
 builder.Services.AddDbContext<StoreContext>(opt =>
@@ -20,11 +22,20 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 // Enregistrement du référentiel générique en mode Scoped
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
+// 1. Ajout du service CORS dans les services
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 
 
 // Pipeline de requêtes HTTP
+app.UseMiddleware<ExceptionMiddleware>();
+
+// Configuration CORS spécifique pour autoriser Angular (ports 4200 en HTTP et HTTPS)
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod()
+    .WithOrigins("http://localhost:4200", "https://localhost:4200"));
+
 app.MapControllers();
 
 try
