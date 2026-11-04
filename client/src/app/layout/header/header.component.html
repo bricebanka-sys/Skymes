@@ -1,0 +1,25 @@
+<header class="shadow-md p-3 w-full">
+  <div class="flex align-middle items-center justify-between max-w-screen-2xl mx-auto">
+    <!-- Logo de l'application -->
+    <img src="/images/logo.png" alt="app Logo" class="max-h-18" />
+
+    <!-- Liens de navigation principaux -->
+    <nav class="flex space-x-3 my-2 uppercase text-xl">
+      <a href="#">Home</a>
+      <a href="#">Shop</a>
+      <a href="#">Contact</a>
+    </nav>
+
+    <!-- Zone utilisateur (Panier & Auth) -->
+    <div class="flex gap-3 align-middle">
+      <!-- Icône du panier avec badge de quantité -->
+      <a href="#" matBadge="5" matBadgeSize="large" class="custom-badge mt-2 mr-2">
+        <mat-icon>shopping_cart</mat-icon>
+      </a>
+
+      <!-- Boutons d'authentification -->
+      <button mat-stroked-button>Login</button>
+      <button mat-stroked-button>Register</button>
+    </div>
+  </div>
+</header>

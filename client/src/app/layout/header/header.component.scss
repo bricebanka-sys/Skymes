@@ -1,0 +1,15 @@
+/* Ajustements du conteneur du badge et Style du contenu du badge matériel */
+
+.custom-badge .mat-badge-content{
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+/* Style de l'icône du panier */
+.custom-badge mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+}
