@@ -1,0 +1,39 @@
+<div class="p-4 max-w-lg  mx-auto">
+  <h3 class="text-xl md:text-2xl font-bold text-center pt-2 mb-4">Filters</h3>
+  
+  <mat-divider></mat-divider>
+
+  <!-- Conteneur des listes : empilé sur mobile, en colonnes sur tablette/desktop -->
+  <div class="flex flex-col md:flex-row gap-4 py-4">
+    
+    <!-- Section des Marques -->
+    <div class="w-full md:w-1/2">
+      <h4 class="font-semibold text-lg text-blue-600 mb-2">Brands</h4>
+      <mat-selection-list [(ngModel)]="selectedBrands" [multiple]="true" class="max-h-60 overflow-y-auto rounded-lg">
+        @for (brand of shopService.brands; track $index) {
+          <mat-list-option [value]="brand">{{ brand }}</mat-list-option>
+        }
+      </mat-selection-list>
+    </div>
+
+    <!-- Section des Types -->
+    <div class="w-full md:w-1/2">
+      <h4 class="font-semibold text-lg mb-2 text-blue-600">Types</h4>
+      <mat-selection-list [(ngModel)]="selectedTypes" [multiple]="true" class="max-h-60 overflow-y-auto rounded-lg">
+        @for (type of shopService.types; track $index) {
+          <mat-list-option [value]="type">{{ type }}</mat-list-option>
+        }
+      </mat-selection-list>
+    </div>
+
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <!-- Bouton d'action responsive -->
+  <div class="flex justify-end pt-4">
+    <button mat-flat-button color="primary" (click)="applyFilters()" class="w-full md:w-auto px-6 py-2 shadow-md">
+      Apply Filters
+    </button>
+  </div>
+</div>
