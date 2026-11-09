@@ -3,8 +3,10 @@ import { provideRouter } from '@angular/router';
 import "zone.js"
 
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { errorInterceptor } from './core/interceptors/error-interceptor';
+import { loadingInterceptor } from './core/interceptors/loading-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,11 +14,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(), // Enregistrement du client HTTP
+    provideHttpClient(withInterceptors([errorInterceptor, loadingInterceptor])) // Enregistrement de l'intercepteur global
 
-    // Correction pour restaurer correctement le focus et éviter les avertissements aria-hidden
-    // {
-    //   provide: MAT_DIALOG_DEFAULT_OPTIONS,
-    //   useValue: { hasBackdrop: true, autofocus: 'dialog', restoreFocus: true }
-    // }
   ]
 };

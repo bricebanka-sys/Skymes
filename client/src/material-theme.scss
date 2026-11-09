@@ -47,3 +47,20 @@ body {
 }
 
 
+/* Style personnalisé pour les snackbars d'erreur (Rouge) */
+.snack-error {
+  @include mat.snack-bar-overrides((
+    button-color: white,
+    container-color: red,
+    supporting-text-color: white
+  ));
+}
+
+/* Style personnalisé pour les snackbars de succès (Vert) */
+.snack-success {
+  @include mat.snack-bar-overrides((
+    button-color: white,
+    container-color: green,
+    supporting-text-color: white
+  ));
+}

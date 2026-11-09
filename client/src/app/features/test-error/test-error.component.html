@@ -1,0 +1,38 @@
+<div class="container mx-auto px-4 sm:px-6 mt-10">
+  <h1 class="text-2xl md:text-3xl font-bold mb-6 text-center">Testing API Error Handling</h1>
+
+  <!-- Groupe de boutons responsifs -->
+  <div class="flex flex-col sm:flex-row justify-center items-center gap-4 flex-wrap">
+    <button mat-stroked-button (click)="get500Error()" class="w-full sm:w-auto px-6 py-3">
+      Test Error 500
+    </button>
+
+    <button mat-stroked-button (click)="get404Error()" class="w-full sm:w-auto px-6 py-3">
+      Test Error 404
+    </button>
+
+    <button mat-stroked-button (click)="get400Error()" class="w-full sm:w-auto px-6 py-3">
+      Test Error 400
+    </button>
+
+    <button mat-stroked-button (click)="get401Error()" class="w-full sm:w-auto px-6 py-3">
+      Test Error 401
+    </button>
+
+    <button mat-stroked-button (click)="get400ValidationError()" class="w-full sm:w-auto px-6 py-3">
+      Test Validation Error
+    </button>
+  </div>
+
+  <!-- Affichage conditionnel des erreurs de validation -->
+  @if (validationErrors) {
+    <div class="max-w-lg mx-auto bg-red-50 border border-red-200 rounded-xl p-4 shadow-sm mt-5">
+      <h3 class="text-red-700 font-semibold mb-2">Validation Errors :</h3>
+      <ul class="space-y-1 list-disc list-inside text-sm text-red-600">
+        @for (error of validationErrors; track $index) {
+          <li>{{ error }}</li>
+        }
+      </ul>
+    </div>
+  }
+</div>

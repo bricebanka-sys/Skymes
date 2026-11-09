@@ -1,0 +1,35 @@
+<!-- <div class="container mx-auto px-4 sm:px-6 mt-10 text-center">
+  <h1 class="text-3xl md:text-4xl font-bold text-red-600">Internal Server Error</h1>
+  <p class="text-gray-600 mt-2">An unexpected error occurred on the server.</p>
+</div> -->
+
+
+<div class="container mx-auto px-4 sm:px-6 mt-10">
+  <div class="bg-gray-100 rounded-xl p-6 shadow-sm max-w-4xl mx-auto">
+    <h1 class="text-2xl font-semibold text-gray-900 mb-4">Internal Server Error</h1>
+
+    @if (error) {
+      <h5 class="text-red-600 font-medium mb-4">Error : {{ error.message }}</h5>
+
+      <p class="font-bold text-gray-800 mb-2">
+        This error comes from the server, not Angular!
+      </p>
+      <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+        When an internal server error occurs, there is usually nothing to fix in the Angular client code. Follow these steps:
+      </p>
+
+      <ol class="list-decimal list-inside space-y-2 mb-6 text-sm text-gray-700 ml-2">
+        <li>Check the Network tab in your browser's dev tools (Chrome DevTools).</li>
+        <li>Reproduce the error directly in an API testing tool like Postman.</li>
+      </ol>
+
+      <h5 class="text-lg font-semibold text-gray-900 mb-2">Stack Trace :</h5>
+
+      <mat-card class="p-4 bg-white shadow-sm overflow-x-auto">
+        <code class="block whitespace-pre-wrap text-xs text-gray-800 font-mono">
+          {{ error.details }}
+        </code>
+      </mat-card>
+    }
+  </div>
+</div>
