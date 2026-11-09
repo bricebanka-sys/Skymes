@@ -13,3 +13,10 @@
     width: 32px;
     height: 32px;
 }
+
+a {
+  &.active {
+    color: #005CBB; /* Couleur pour le lien actif */
+    font-weight: bold;
+  }
+}

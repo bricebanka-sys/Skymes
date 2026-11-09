@@ -3,8 +3,10 @@
     
     <!-- Ligne supérieure sur mobile / Logo seul sur desktop -->
     <div class="flex items-center justify-between w-full md:w-auto">
-      <!-- Logo de l'application -->
-      <img src="/images/logo.png" alt="app Logo" class="max-h-12 md:max-h-16 object-contain" />
+      <!-- Logo de l'application redirigeant vers l'accueil -->
+      <a routerLink="/" class="cursor-pointer">
+        <img src="/images/logo.png" alt="app Logo" class="max-h-12 md:max-h-16 object-contain" />
+      </a>
       
       <!-- Optionnel : Un bouton menu burger pourrait être ajouté ici si l'application grandit, 
            mais pour l'instant les liens passent en mode compact sur petits écrans -->
@@ -12,9 +14,9 @@
 
     <!-- Liens de navigation principaux (ajustement de la taille de police et des espaces selon l'écran) -->
     <nav class="flex space-x-4 md:space-x-6 my-1 md:my-2 uppercase text-sm md:text-xl font-medium text-gray-700">
-      <a href="#" class="hover:text-primary transition-colors">Home</a>
-      <a href="#" class="hover:text-primary transition-colors">Shop</a>
-      <a href="#" class="hover:text-primary transition-colors">Contact</a>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="hover:text-primary transition-colors">Home</a>
+      <a routerLink="/shop" routerLinkActive="active" class="hover:text-primary transition-colors">Shop</a>
+      <a routerLink="/contact" routerLinkActive="active" class="hover:text-primary transition-colors">Contact</a>
     </nav>
 
     <!-- Zone utilisateur (Panier & Auth) -->

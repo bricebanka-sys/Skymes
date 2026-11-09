@@ -50,6 +50,12 @@ export class ShopService {
   }
 
 
+  // Récupérer un produit unique par son identifiant
+  getProduct(id: number) {
+    return this.http.get<Product>(this.baseUrl + 'products/' + id);
+  }
+
+
   // Récupération des marques avec vérification pour ne les charger qu'une seule fois
   getBrands() {
     if (this.brands.length > 0) return;
