@@ -1,7 +1,9 @@
 using API.Middleware;
 using Core.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,22 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 
 // 1. Ajout du service CORS dans les services
 builder.Services.AddCors();
+
+
+// Enregistrement de IConnectionMultiplexer en tant que Singleton pour gérer la connexion Redis
+builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
+{
+    // Récupération de la chaîne de connexion depuis appsettings.json
+    var connString = builder.Configuration.GetConnectionString("Redis") 
+                     ?? throw new InvalidOperationException("Cannot get Redis connection string.");
+    
+    // Configuration et connexion à Redis
+    var configuration = ConfigurationOptions.Parse(connString, true);
+    return ConnectionMultiplexer.Connect(configuration);
+});
+
+// Enregistrement du service de panier en tant que Singleton
+builder.Services.AddSingleton<ICartService, CartService>();
 
 var app = builder.Build();
 
