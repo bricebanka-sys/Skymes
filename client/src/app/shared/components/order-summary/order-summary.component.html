@@ -1,0 +1,58 @@
+<div class="w-full">
+  <div class="space-y-4 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+    
+    <!-- Titre du Résumé -->
+    <p class="text-xl font-semibold text-gray-900">Order summary</p>
+
+    <div class="space-y-4">
+      <div class="space-y-2">
+        
+        <!-- Ligne Sous-total -->
+        <dl class="flex items-center justify-between gap-4">
+          <dt class="text-base font-medium text-gray-500">Subtotal</dt>
+          <dd class="text-base font-medium text-gray-900">{{ cartService.totals()?.subtotal | currency }}</dd>
+        </dl>
+
+        <!-- Ligne Réduction (Promotion) -->
+        <dl class="flex items-center justify-between gap-4">
+          <dt class="text-base font-medium text-gray-500">Discount</dt>
+          <dd class="text-base font-medium text-green-600">-{{ cartService.totals()?.discount | currency}}</dd>
+        </dl>
+
+        <!-- Ligne Frais de livraison -->
+        <dl class="flex items-center justify-between gap-4">
+          <dt class="text-base font-medium text-gray-500">Shipping</dt>
+          <dd class="text-base font-medium text-gray-900">{{ cartService.totals()?.shipping | currency }}</dd>
+        </dl>
+
+      </div>
+
+      <!-- Ligne Total Général -->
+      <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-4">
+        <dt class="text-base font-bold text-gray-900">Total</dt>
+        <dd class="text-base font-bold text-gray-900">{{ cartService.totals()?.total | currency }}</dd>
+      </dl>
+
+    </div>
+
+    <!-- Boutons d'Action (Passer la commande / Continuer les achats) -->
+    <div class="flex flex-col gap-3 pt-2">
+      <a routerLink="/checkout" mat-flat-button color="primary" class="w-full py-3 text-base flex items-center justify-center">Checkout</a>
+      <a mat-stroked-button color="primary" routerLink="/shop" class="w-full py-3 text-base flex items-center justify-center">Continue Shopping</a>
+    </div>
+  </div>
+
+  <!-- Section Bon d'achat / Code Promo -->
+  <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm space-y-4 mt-4">
+    <form class="flex flex-col gap-3">
+      <label class="block text-sm font-semibold text-gray-800">Do you have a voucher code?</label>
+      
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full">
+        <mat-label>Voucher Code</mat-label>
+        <input matInput placeholder="Enter your code" autocomplete="off" />
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" type="button" class="w-full h-11! font-medium">Apply Code</button>
+    </form>
+  </div>
+</div>

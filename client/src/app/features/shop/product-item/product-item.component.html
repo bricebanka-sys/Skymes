@@ -7,12 +7,12 @@
     <mat-card-content class="mt-3 flex-grow">
       <h2 class="text-sm font-semibold uppercase truncate">{{ product.name }}</h2>
       <!-- Affichage du prix formaté en devise -->
-      <p class="font-light text-gray-600 mt-1">{{ product.price | currency:'number':'' }} €</p>
+      <p class="font-light text-gray-600 mt-1">{{ product.price | currency}}</p>
     </mat-card-content>
 
     <!-- Actions de la carte -->
-    <mat-card-actions class="p-3 pt-0">
-      <button mat-stroked-button class="w-full flex items-center justify-center gap-2">
+    <mat-card-actions class="p-3 pt-0" (click)="$event.stopPropagation()">
+      <button mat-stroked-button class="w-full flex items-center justify-center gap-2" (click)="cartService.addItemToCart(product)">
         <mat-icon>add_shopping_cart</mat-icon>
         Add to Cart
       </button>

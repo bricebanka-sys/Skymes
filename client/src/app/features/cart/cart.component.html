@@ -1,0 +1,29 @@
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-32">
+  @if (cartService.cart(); as cart) {
+    @if (cart.items.length > 0) {
+      <!-- Titre placé au-dessus de la grille pour un alignement horizontal parfait des deux colonnes -->
+      <h2 class="text-2xl font-bold mb-6 text-gray-900">Votre Panier d'Achat</h2>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        
+        <!-- Liste des articles (2 colonnes sur grand écran) -->
+        <div class="lg:col-span-2 space-y-4">
+          @for (item of cart.items; track item.productId) {
+            <app-cart-item [item]="item" />
+          }
+        </div>
+
+        <!-- Résumé de la commande (1 colonne sur grand écran, fixe au défilement) -->
+        <div class="lg:col-span-1 lg:sticky lg:top-36">
+          <app-order-summary />
+        </div>
+
+      </div>
+    } @else {
+      <div class="text-center py-20">
+        <h2 class="text-2xl font-semibold text-gray-600 mb-4">Votre panier est vide</h2>
+        <a mat-flat-button color="primary" routerLink="/shop">Découvrir nos produits</a>
+      </div>
+    }
+  }
+</section>

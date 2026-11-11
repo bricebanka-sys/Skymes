@@ -19,7 +19,7 @@
     <!-- Zone utilisateur (Panier & Auth alignés proprement à droite) -->
     <div class="flex items-center gap-2 md:gap-3">
       <!-- Icône du panier avec badge -->
-      <a href="#" matBadge="5" matBadgeSize="large" class="custom-badge mr-1 flex items-center justify-center">
+      <a routerLink="/cart" routerLinkActive="active" matBadge="{{ cartService.itemCount() }}" matBadgeSize="large" class="custom-badge mr-1 flex items-center justify-center">
         <mat-icon>shopping_cart</mat-icon>
       </a>
 
