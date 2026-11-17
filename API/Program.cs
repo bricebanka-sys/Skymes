@@ -1,4 +1,5 @@
 using API.Middleware;
+using Core.Entities;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Services;
@@ -43,6 +44,11 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
 // Enregistrement du service de panier en tant que Singleton
 builder.Services.AddSingleton<ICartService, CartService>();
 
+// Ajout de l'authentification et de l'identité
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<AppUser>()
+    .AddEntityFrameworkStores<StoreContext>();
+
 var app = builder.Build();
 
 
@@ -51,10 +57,14 @@ var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 
 // Configuration CORS spécifique pour autoriser Angular (ports 4200 en HTTP et HTTPS)
-app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod()
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
     .WithOrigins("http://localhost:4200", "https://localhost:4200"));
 
 app.MapControllers();
+
+// Mappage automatique des endpoints d'identité .NET (Register, Login, etc.)
+// et Regroupement des points de terminaison d'identité sous le préfixe /api
+app.MapGroup("api").MapIdentityApi<AppUser>();
 
 try
 {
@@ -73,5 +83,7 @@ catch (Exception ex)
     Console.WriteLine(ex);
     throw;
 }
+
+app.UseCors("CorsPolicy");
 
 app.Run();

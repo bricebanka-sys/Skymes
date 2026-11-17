@@ -1,6 +1,8 @@
 using System;
+using System.Security.Claims;
 using API.DTOs;
 using Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -35,5 +37,17 @@ public class BuggyController : BaseApiController
     public IActionResult GetValidationError(CreateProductDto product)
     {
         return Ok();
+    }
+
+
+    [Authorize]
+    [HttpGet("secret")]
+    public ActionResult<string> GetSecret()
+    {
+        // Récupération des informations (claims) stockées dans le cookie de session
+        var name = User.FindFirst(ClaimTypes.Name)?.Value;
+        var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        return Ok($"Hello {name}, your unique identifier is {id}.");
     }
 }
