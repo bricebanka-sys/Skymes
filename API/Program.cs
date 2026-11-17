@@ -84,6 +84,4 @@ catch (Exception ex)
     throw;
 }
 
-app.UseCors("CorsPolicy");
-
 app.Run();
