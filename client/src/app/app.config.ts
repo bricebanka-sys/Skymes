@@ -13,6 +13,7 @@ import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
 import { LOCALE_ID, DEFAULT_CURRENCY_CODE } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/de';
+import { authInterceptor } from './core/interceptors/auth-interceptor';
 
 
 // function initializeApp(initService: InitService) {
@@ -33,7 +34,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(), // Enregistrement du client HTTP
-    provideHttpClient(withInterceptors([errorInterceptor, loadingInterceptor])), // Enregistrement de l'intercepteur global
+    provideHttpClient(withInterceptors([errorInterceptor, loadingInterceptor, authInterceptor])), // Enregistrement de l'intercepteur global
 
     { provide: LOCALE_ID, useValue: 'de-DE' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR' },

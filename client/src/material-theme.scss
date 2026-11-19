@@ -48,7 +48,7 @@ body {
 
 
 /* Style personnalisé pour les snackbars d'erreur (Rouge) */
-.snack-error {
+.snackbar-error {
   @include mat.snack-bar-overrides((
     button-color: white,
     container-color: red,
@@ -57,10 +57,52 @@ body {
 }
 
 /* Style personnalisé pour les snackbars de succès (Vert) */
-.snack-success {
+.snackbar-success {
   @include mat.snack-bar-overrides((
     button-color: white,
     container-color: green,
     supporting-text-color: white
   ));
 }
+
+
+
+
+
+/* Menu déroulant utilisateur */
+.user-menu.mat-mdc-menu-panel {
+  min-width: 170px;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.12), 0 2px 6px rgb(0 0 0 / 0.06);
+}
+
+.user-menu .mat-mdc-menu-content {
+  display: flex !important;
+  flex-direction: column;
+  gap: 14px;
+  padding: 6px !important;
+}
+
+.user-menu .mat-mdc-menu-item {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 10px !important;
+  border-radius: 8px;
+}
+
+.user-menu .mat-mdc-menu-item .mat-mdc-menu-item-text {
+  display: block;
+  flex: 1;
+  width: 100%;
+}
+
+.user-menu .mat-mdc-menu-item:hover {
+  background: #f3f4f6;
+}
+
+.user-menu .mat-divider {
+  margin: 4px 0 !important;
+  border-top-color: #e5e7eb;
+}
+

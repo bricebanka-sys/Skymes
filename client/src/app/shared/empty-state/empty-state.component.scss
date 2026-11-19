@@ -1,0 +1,9 @@
+.icon-display {
+  transform: scale(2.5);
+}
+
+@media (min-width: 640px) {
+  .icon-display {
+    transform: scale(3);
+  }
+}

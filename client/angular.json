@@ -15,6 +15,11 @@
         },
         "@schematics/angular:service": {
           "type": "service"
+        },
+
+        "@schematics/angular:guard": {
+          "skipTests": true,
+          "path": "src/core/guards"
         }
       },
       "root": "",

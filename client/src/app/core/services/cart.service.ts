@@ -48,6 +48,7 @@ export class CartService {
       total
     };
   });
+  cartResource: any;
 
   // Récupération d'un panier par son ID depuis l'API
   getCart(id: string) {

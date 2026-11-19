@@ -13,8 +13,8 @@ export class SnackbarService {
     this.snackBar.open(message, 'Close', {
       duration: 5000,
       horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-      panelClass: ['snack-error'] // Classe CSS personnalisée pour le style d'erreur
+      verticalPosition: 'top',
+      panelClass: ['snackbar-error'] // Classe CSS personnalisée pour le style d'erreur
     });
   }
 
@@ -22,8 +22,8 @@ export class SnackbarService {
     this.snackBar.open(message, 'Close', {
       duration: 5000,
       horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-      panelClass: ['snack-success'] // Classe CSS personnalisée pour le style de succès
+      verticalPosition: 'top',
+      panelClass: ['snackbar-success'] // Classe CSS personnalisée pour le style de succès
     });
   }
 }

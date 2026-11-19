@@ -19,14 +19,51 @@
     <!-- Zone utilisateur (Panier & Auth alignés proprement à droite) -->
     <div class="flex items-center gap-2 md:gap-3">
       <!-- Icône du panier avec badge -->
-      <a routerLink="/cart" routerLinkActive="active" matBadge="{{ cartService.itemCount() }}" matBadgeSize="large" class="custom-badge mr-1 flex items-center justify-center">
+      <a routerLink="/cart" routerLinkActive="active" matBadge="{{ cartService.itemCount() }}" matBadgeSize="large" (click)="onCartClick()" class="custom-badge mr-1 flex items-center justify-center">
         <mat-icon>shopping_cart</mat-icon>
       </a>
 
       <!-- Boutons d'authentification -->
-      <button mat-stroked-button class="text-xs md:text-sm px-2.5 py-1">Login</button>
-      <button mat-stroked-button class="text-xs md:text-sm px-2.5 py-1">Register</button>
-    </div>   
+      <!-- Navigation et Actions utilisateur -->     
+        <!-- Boutons d'authentification -->
+        <!-- Navigation et Actions utilisateur -->
+        <div class="flex items-center gap-2 sm:gap-4">
+          @if (accountService.currentUser(); as user) {
+            <div class="mx-1 sm:mx-3">
+              <button mat-button [matMenuTriggerFor]="menu" class="flex items-center gap-1 max-w-50 sm:max-w-xs truncate font-medium text-blue-700!">
+                <mat-icon>arrow_drop_down</mat-icon>
+                <span class="truncate">{{ user.email }}</span>
+              </button>
+
+              <mat-menu #menu="matMenu" class="user-menu">
+                <button mat-menu-item routerLink="/cart">
+                  <span class="flex items-center gap-3">
+                    <mat-icon class="m-0! size-5! text-[20px]! leading-5! text-gray-700!">shopping_cart</mat-icon>
+                    <span class="text-sm font-semibold leading-5 text-gray-900">My cart</span>
+                  </span>
+                </button>
+                <button mat-menu-item routerLink="/orders">
+                  <span class="flex items-center gap-3">
+                    <mat-icon class="m-0! size-5! text-[20px]! leading-5! text-gray-700!">history</mat-icon>
+                    <span class="text-sm font-semibold leading-5 text-gray-900">View orders</span>
+                  </span>
+                </button>
+                <mat-divider />
+                <button mat-menu-item (click)="logout()">
+                  <span class="flex items-center gap-3">
+                    <mat-icon class="m-0! size-5! text-[20px]! leading-5! text-gray-700!">logout</mat-icon>
+                    <span class="text-sm font-semibold leading-5 text-gray-900">Logout</span>
+                  </span>
+                </button>
+              </mat-menu>
+            </div>
+          } @else {
+            <button mat-button routerLink="/account/login">Login</button>
+            <button mat-flat-button routerLink="/account/register">Register</button>
+          }
+        </div>    
+        
+    </div>  
 
   </div>
 
