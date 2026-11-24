@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, Location } from '@angular/common';
 
 @Component({
   selector: 'app-order-summary',
@@ -21,4 +21,17 @@ import { CurrencyPipe } from '@angular/common';
 export class OrderSummaryComponent {
 
   cartService = inject(CartService);
+  protected location = inject(Location);
+  private router = inject(Router);
+  protected loading = signal(false);
+
+
+  protected async onCheckout() {
+    this.loading.set(true);
+    try {
+      await this.router.navigateByUrl('/checkout');
+    } finally {
+      this.loading.set(false);
+    }
+  }
 }

@@ -2,6 +2,7 @@ import { computed, inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpParams, httpResource } from '@angular/common/http';
 import { Address, User } from '../../shared/models/user.model';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +40,14 @@ export class AccountService {
 
   // Méthode de mise à jour de l'adresse de livraison
   public updateAddress(address: Address) {
-    return this.http.post<Address>(`${this.baseUrl}account/address`, address);
+    return this.http.post<Address>(`${this.baseUrl}account/address`, address).pipe(
+      tap(() => {
+        this.userResource.update(user => {
+          if (user) user.address = address;
+          return user;
+        });
+      })
+    );
   }
 }
 

@@ -12,6 +12,7 @@ public class StoreContext(DbContextOptions options) : IdentityDbContext<AppUser>
   public DbSet<Product> Products { get; set; } = null!;
   public DbSet<Address> Addresses { get; set; } = null!; // Ajout du DbSet pour les adresses
 
+  public DbSet<DeliveryMethod> DeliveryMethods { get; set; } = null!;
   protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

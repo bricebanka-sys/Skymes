@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Cart, CartItem } from '../../shared/models/cart';
 import { Product } from '../../shared/models/product';
 import { map } from 'rxjs/internal/operators/map';
+import { CheckoutService } from './checkout.service';
+import { firstValueFrom, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +14,7 @@ export class CartService {
 
   private http = inject(HttpClient);
   private baseUrl = environment.apiUrl;
+  private checkoutService = inject(CheckoutService);
 
   // Signal réactif pour stocker le panier (initialement null)
   cart = signal<Cart | null>(null);
@@ -30,11 +33,17 @@ export class CartService {
     const cart = this.cart();
     if (!cart) return null;
 
+    const deliveryId = cart.deliveryMethodId;
+
+
+
     // Calcul du sous-total via la méthode reduce
     const subtotal = cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     
     // Frais de livraison forfaitaires (ou gratuits au-delà d'un certain montant)
-    const shipping = subtotal > 0 ? 10 : 0; 
+    const shipping = deliveryId
+    ? this.checkoutService.deliveryMethods().find((x) => x.id === deliveryId)?.price ?? 0
+    : 0; 
     
     // Réduction (fixée à 0 pour l'instant)
     const discount = 0; 
@@ -62,9 +71,16 @@ export class CartService {
 
   // Enregistrement ou mise à jour du panier sur le serveur et mise à jour du signal
   setCart(cart: Cart) {
-    return this.http.post<Cart>(this.baseUrl + 'cart', cart).subscribe({
-      next: (response) => this.cart.set(response)
-    });
+    return firstValueFrom(
+      this.http.post<Cart>(this.baseUrl + 'cart', cart).pipe(
+        tap((response) => {
+          this.cart.set(response);
+          if (response?.id) {
+            localStorage.setItem('cart_id', response.id);
+          }
+        })
+      )
+    );
   }
 
 

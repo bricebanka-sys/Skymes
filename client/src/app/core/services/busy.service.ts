@@ -1,23 +1,21 @@
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BusyService {
 
-  loading = false;
-  busyRequestCount = 0;
+  busyRequestCount = signal(0);
+  loading = computed(() => this.busyRequestCount() > 0);
 
   busy() {
-    this.busyRequestCount++;
-    this.loading = true;
+    this.busyRequestCount.update((count) => count + 1);
   }
 
   idle() {
-    this.busyRequestCount--;
-    if (this.busyRequestCount <= 0) {
-      this.busyRequestCount = 0;
-      this.loading = false;
-    }
+    this.busyRequestCount.update((count) => {
+      const next = count - 1;
+      return next <= 0 ? 0 : next;
+    });
   }
 }

@@ -75,7 +75,7 @@
   </nav>
 
   <!-- Barre de progression ancrée précisément sur la bordure inférieure du Header -->
-  @if (busyService.loading) {
+  @if (busyService.loading()) {
     <mat-progress-bar mode="indeterminate" class="absolute bottom-0 left-0 w-full"></mat-progress-bar>
   }
 </header>

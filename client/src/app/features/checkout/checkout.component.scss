@@ -1,0 +1,19 @@
+// Le stepper vertical masque tout ce qui dépasse de chaque étape (overflow: hidden)
+:host ::ng-deep {
+  .mat-vertical-stepper-content:not(.mat-vertical-stepper-content-inactive),
+  .mat-vertical-content-container,
+  .mat-vertical-content {
+    overflow: visible;
+  }
+
+  // Conteneur de l'Address Element : pleine largeur, au-dessus des éléments voisins
+  #address-element {
+    display: block;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 3rem;
+  }
+}
+
+

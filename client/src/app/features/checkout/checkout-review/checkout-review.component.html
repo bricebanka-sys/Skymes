@@ -1,0 +1,92 @@
+<div class="w-full space-y-5 sm:space-y-6 lg:space-y-8">
+  <div class="space-y-3 sm:space-y-4">
+    <h4 class="text-base sm:text-lg lg:text-xl font-semibold leading-snug">
+      Billing and delivery information
+    </h4>
+
+    @if (confirmationToken(); as token) {
+      <dl class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
+        <div class="min-w-0">
+          <dt class="font-medium text-sm sm:text-base">Shipping address</dt>
+          <dd class="mt-1 font-light text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400 space-y-0.5 break-words">
+            @if (shippingAddress(); as address) {
+              <div class="break-words">
+                @if (shippingName()) {
+                  <span>{{ shippingName() }} </span>
+                }
+                <span>{{ address.line1 }} </span>
+                @if (address.line2) {
+                  <span>{{ address.line2 }} </span>
+                }
+              </div>
+              <div class="break-words">
+                <span>{{ address.city }}, </span>
+                @if (address.state) {
+                  <span>{{ address.state }}, </span>
+                }
+                <span>{{ address.postal_code }}</span>
+              </div>
+              <div class="break-words">
+                <span>{{ address.country }}</span>
+              </div>
+            } @else {
+              <span>No shipping address provided</span>
+            }
+          </dd>
+        </div>
+
+        <div class="min-w-0">
+          <dt class="font-medium text-sm sm:text-base">Payment details</dt>
+          <dd class="mt-1 font-light text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400 break-words">
+            @if (cardPreview(); as card) {
+              <div class="flex flex-wrap items-center gap-x-2 gap-y-1 min-w-0">
+                <span class="uppercase font-medium text-gray-800 dark:text-gray-400">
+                  {{ card.brand }}
+                </span>
+                <span>ending in {{ card.last4 }}</span>
+                <span>(expires {{ card.exp_month }}/{{ card.exp_year }})</span>
+              </div>
+            } @else {
+              <span>No payment method details available.</span>
+            }
+          </dd>
+        </div>
+      </dl>
+    } @else {
+      <p class="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400 break-words">
+        Preparing payment summary...
+      </p>
+    }
+  </div>
+
+  <div class="mt-4 sm:mt-6 w-full max-w-full overflow-x-auto rounded-lg sm:rounded-xl border border-gray-300 dark:border-gray-200 bg-[var(--mat-sys-surface-container-low)]">
+    <table class="w-full min-w-[320px] sm:min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+      <tbody class="divide-y divide-gray-100 dark:divide-gray-200">
+        @for (item of cartService.cart()?.items ?? []; track item.productId) {
+          <tr>
+            <td class="p-3 sm:p-4 lg:p-4 max-w-[160px] sm:max-w-xs lg:max-w-md">
+              <div class="flex items-center gap-2.5 sm:gap-3 lg:gap-4 min-w-0">
+                <img
+                  [src]="item.pictureUrl"
+                  [alt]="item.productName"
+                  class="w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 object-cover rounded-md shrink-0"
+                />
+                <span class="text-xs sm:text-sm lg:text-base font-medium break-words">
+                  {{ item.productName }}
+                </span>
+              </div>
+            </td>
+
+            <td class="p-2.5 sm:p-3.5 lg:p-4 text-xs sm:text-sm lg:text-base whitespace-nowrap text-gray-700 dark:text-gray-300">
+              x{{ item.quantity }}
+            </td>
+
+            <td class="p-2.5 sm:p-3.5 lg:p-4 text-xs sm:text-sm lg:text-base font-semibold text-right whitespace-nowrap">
+              {{ item.price * item.quantity | currency }}
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

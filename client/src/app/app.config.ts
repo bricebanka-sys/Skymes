@@ -1,5 +1,5 @@
 import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withViewTransitions } from '@angular/router';
 import "zone.js"
 
 import { routes } from './app.routes';
@@ -31,7 +31,7 @@ registerLocaleData(localeFr);
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
+    provideRouter(routes, withViewTransitions()),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(), // Enregistrement du client HTTP
     provideHttpClient(withInterceptors([errorInterceptor, loadingInterceptor, authInterceptor])), // Enregistrement de l'intercepteur global

@@ -1,6 +1,92 @@
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-32">
-  <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm text-center">
-    <h1 class="text-2xl font-bold text-gray-800">Checkout</h1>
-    <p class="text-gray-600 mt-2">Only authenticated and authorized users can access this section.</p>
+<section class="mx-auto w-full max-w-7xl overflow-x-hidden px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
+  <div class="flex flex-col lg:flex-row gap-4 sm:gap-6 items-start">
+    <div class="w-full lg:w-3/4 min-w-0">
+      <mat-stepper
+        #stepper
+        [linear]="true"
+        class="bg-white dark:bg-(--mat-sys-surface) border-0 shadow-md shadow-gray-200/70 dark:shadow-black/30 rounded-2xl p-2 sm:p-4"
+        (selectionChange)="onStepChange($event)"
+        [orientation]="stepperOrientation()"        
+      >
+        <mat-step label="Adresse" [completed]="addressComplete()">
+          <div class="py-4">
+            <div #addressElement id="address-element" class="w-full min-h-56"></div>
+
+            <div class="flex justify-end mt-2">
+              <mat-checkbox
+                [checked]="saveAddress()"
+                (change)="saveAddress.set($event.checked)"
+                class="text-sm"
+              >
+                Save as default address
+              </mat-checkbox>
+            </div>
+
+            <div class="flex flex-col-reverse sm:flex-row justify-between gap-3 mt-6">
+              <button mat-stroked-button routerLink="/shop" class="w-full sm:w-auto">
+                Continue shopping
+              </button>
+              <button mat-flat-button matStepperNext [disabled]="!addressComplete()" class="w-full sm:w-auto">
+                Next
+              </button>
+            </div>
+          </div>
+        </mat-step>
+
+        <mat-step label="Shipping" [completed]="deliveryComplete()">
+          <div class="py-3 sm:py-4">
+             <app-checkout-delivery (deliveryComplete)="deliveryComplete.set($event)" />
+             <div class="flex flex-col-reverse sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-6">
+              <button mat-stroked-button matStepperPrevious class="w-full sm:w-auto">
+                Back
+              </button>
+              <button mat-flat-button matStepperNext [disabled]="!deliveryComplete()" class="w-full sm:w-auto">
+                Next
+              </button>
+            </div>
+          </div>        
+        </mat-step>
+
+        <mat-step label="Payment" [completed]="paymentComplete()">
+          <div class="py-3 sm:py-4">
+            <div #paymentElement id="payment-element" class="w-full min-h-[220px]"></div>
+
+            <div class="flex flex-col-reverse sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-6">
+              <button mat-stroked-button matStepperPrevious class="w-full sm:w-auto">
+                Back
+              </button>
+              <button mat-flat-button matStepperNext [disabled]="!paymentComplete()" class="w-full sm:w-auto">
+                Next
+              </button>
+            </div>
+          </div>
+        </mat-step>
+
+        <mat-step label="Confirmation">
+          <div class="py-3 sm:py-4">
+            <app-checkout-review />
+
+            <div class="flex flex-col-reverse sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-6">
+              <button mat-stroked-button matStepperPrevious class="w-full sm:w-auto">
+                Back
+              </button>
+              <button 
+                  mat-flat-button
+                  (click)="onConfirmPayment(stepper)" 
+                  [disabled]="!checkoutComplete() || processing()" 
+                  class="w-full sm:w-auto" 
+                >
+                  {{ processing() ? 'Processing payment...' : 'Pay ' + (cartService.totals()?.total | currency) }}
+              </button>
+            </div>
+          </div>
+        </mat-step>
+      </mat-stepper>
+    </div>
+
+    <aside class="w-full lg:w-1/4 min-w-0">
+      <!-- Récapitulatif de la commande -->
+      <app-order-summary />
+    </aside>
   </div>
 </section>

@@ -32,7 +32,7 @@ public static class AddressMappingExtensions
             Line1 = addressDto.Line1,
             Line2 = addressDto.Line2,
             City = addressDto.City,
-            State = addressDto.State,
+            State = addressDto.State ?? string.Empty,
             PostalCode = addressDto.PostalCode,
             Country = addressDto.Country
         };
@@ -47,7 +47,7 @@ public static class AddressMappingExtensions
         address.Line1 = addressDto.Line1;
         address.Line2 = addressDto.Line2;
         address.City = addressDto.City;
-        address.State = addressDto.State;
+        address.State = addressDto.State ?? string.Empty;
         address.PostalCode = addressDto.PostalCode;
         address.Country = addressDto.Country;
     }
