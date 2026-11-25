@@ -25,6 +25,9 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 // Enregistrement du référentiel générique en mode Scoped
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 // 1. Ajout du service CORS dans les services
 builder.Services.AddCors();
 
